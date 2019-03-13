@@ -1,0 +1,140 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath}                % not included by default
+\usepackage{hyperref}               % not include by default
+\usepackage[utf8]{inputenc}
+\usepackage{mathrsfs}
+\usepackage{graphicx}
+\usepackage{subfig}
+\usepackage{mathtools}
+
+
+\graphicspath{{Images/}}
+
+\title{ELMS 2: \\ One-Dimensional Eigenvalue Problem}
+\author{Karl Westerholm,  Michael Imseis}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+~~~The General Sturm-Liouville eigenvalue problem is given by:
+
+\begin{equation}
+    \mathscr{L}[u(\vec{x})] = -\vec{\nabla}\dot(p(\vec{x})\vec{\nabla}u) + q(\vec{x})u = \lambda\rho(\vec{x})u
+\end{equation}
+
+In one dimension:
+
+\begin{equation}\label{SL}
+    \mathscr{L}[u(x)] = -\frac{d}{dx}\bigg(p(x)\frac{du}{dx}\bigg) + q(x)u = \lambda\rho(x)u
+\end{equation}
+
+We will be studying the quantum mechanical system of a one-dimensional particle in a box. 
+
+The time independent Schr\"odinger equation (TISE) is given by:
+\begin{equation}\label{SE}
+    \hat{H}\psi(x) = -\frac{\hbar^2}{2m}\frac{d^2\psi}{dx^2}(x) + U(x)\psi(x) = E\psi(x)
+\end{equation}
+
+Where U(x) is the potential function, E is the energy, m is the mass of the particle, $\hbar$ is Planck's constant divided by 2$\pi$, and the Hamiltonian Operator, $\hat{H}$ is given by:
+
+\begin{equation}
+    \hat{H} = -\frac{\hbar^2}{2m}\frac{d^2}{dx^2} + U(x)
+\end{equation}
+
+Note that if we take Eq (\ref{SL}) and set $p(x) = \frac{\hbar^2}{2m}, q(x) = U(x),$ and $\rho(x) = 1$, then it becomes the TISE. The eigenvalues have now become eigenenergies. 
+
+As mentioned, we will be looking mainly at the problem of the "particle in a box", where we have a particle in a potential well of length $L$. We will look at both the infinite and finite potential cases, and discuss the various implications. 
+
+\hrulefill
+
+\begin{itemize}
+    \item Background and Context
+    \item Plan of Action
+\end{itemize}
+
+
+\section{Methods}
+~~~ All our analysis was done using the One-Dimensional Eigenvalue Problem notebook provided, which solves the PDEs via the Firedrake Finite Element method. The code was modified slightly for correcting for constants and other functions. 
+
+
+\subsection{Infinite Potential Well}
+~~~ In the infinite potential case, we consider a potential function of the form:
+
+\begin{equation}
+    U(x) = 
+    \begin{dcases}
+        \infty & x < 0 \\
+        0 & 0\leq x\leq L \\
+        \infty & x > L \\
+    \end{dcases}
+\end{equation}
+
+We look back to the TISE: 
+
+\begin{equation}\notag
+    \hat{H}\psi(x) = -\frac{\hbar^2}{2m}\frac{d^2\psi}{dx^2}(x) + U(x)\psi(x) = E\psi(x)
+\end{equation}
+
+To prevent the TISE from blowing up outside of $x\in[0,L]$, we must have that $\psi(x) = 0$ in that domain. Physically, this makes sense, as it implies that the particle cannot exist outside the infinite potential boundaries. 
+
+Thus our ODE is going to be in the domain where $\psi(x)\neq0$, which is where $U(x)=0$. Our ODE will then look like:
+
+\begin{equation}
+    -\frac{\hbar^2}{2m}\frac{d^2\psi}{dx^2}(x) = E\psi(x)
+\end{equation}
+
+Our boundary conditions (BCs) are that $\psi(x)$ must be continuous everywhere, and therefore must be equal to $0$ at the boundaries. We also have then that $\psi\prime(x)$ must be continuous at the boundaries, and must therefore be 0 there as well.
+
+Thus we have:
+
+\[\begin{array}{cc}
+    \mbox{ODE:} & \psi\prime\prime(x) = -\frac{2mE}{\hbar^2}\psi(x)  \\
+    \mbox{BCs:} & \psi(0) = \psi(L) = 0 \\
+    \mbox{} & \psi\prime(0) = \psi\prime(L) = 0
+\end{array}\]
+
+
+\subsection{Finite Potential Well}
+\hrulefill
+
+
+\begin{itemize}
+    \item State PDEs, BCs, and ICs
+    \item State Parameters
+    \item State what we do differently
+\end{itemize}
+
+
+\section{Results}
+
+
+
+\hrulefill
+\begin{itemize}
+    \item Compare with results from lectures
+    \item Highlight Major findings
+\end{itemize}
+
+
+\section{Conclusions}
+
+\hrulefill
+\begin{itemize}
+    \item Summarize major findings
+    \item Why do we care?
+    \item What do we want to do next?
+\end{itemize}
+
+
+\cleardoublepage
+
+
+\begin{thebibliography}{10}
+\bibitem{myref} Poulin, Francis J. \emph{AMATH 353 Course Notes: Partial Differential Equations 1}, Desire2Learn website, 2019.
+\end{thebibliography}
+
+
+\end{document}
